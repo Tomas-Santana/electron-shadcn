@@ -1,18 +1,27 @@
 import React from "react";
-import ToggleTheme from "@/components/ToggleTheme";
-import { useTranslation } from "react-i18next";
-import LangToggle from "@/components/LangToggle";
+import { FTPConnectForm } from "@/components/FTPConnectForm";
+import { FileList } from "@/components/FileList";
+import { useWindowDimensions } from "@/hooks/useWindowsDimensions";
+import { FileInput } from "@/components/FileInput";
 
 export default function HomePage() {
-    const { t } = useTranslation();
+  const [connInfo, setConnInfo] = React.useState({
+    host: "",
+    port: 21,
+    user: "",
+  });
+  const { height } = useWindowDimensions();
 
-    return (
-        <>
-            <div className="flex h-screen flex-col items-center justify-center gap-2">
-                <h1 className="text-4xl font-bold">{t("title")}</h1>
-                <LangToggle />
-                <ToggleTheme />
-            </div>
-        </>
-    );
+  return (
+    <>
+      <div className={`flex flex-col gap-4 p-4`} style={{ height: `calc(${height}px - 3rem)` }}>
+        <div>
+          <FTPConnectForm setConnInfo={setConnInfo} connInfo={connInfo} />
+        </div>
+        <div className="flex-1">
+          <FileList connInfo={connInfo} />
+        </div>
+      </div>
+    </>
+  );
 }

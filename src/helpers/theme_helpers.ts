@@ -8,6 +8,7 @@ export interface ThemePreferences {
 }
 
 export async function getCurrentTheme(): Promise<ThemePreferences> {
+    // @ts-ignore
     const currentTheme = await window.themeMode.current();
     const localTheme = localStorage.getItem(THEME_KEY) as ThemeMode | null;
 
@@ -20,14 +21,17 @@ export async function getCurrentTheme(): Promise<ThemePreferences> {
 export async function setTheme(newTheme: ThemeMode) {
     switch (newTheme) {
         case "dark":
+            // @ts-ignore
             await window.themeMode.dark();
             updateDocumentTheme(true);
             break;
         case "light":
+            // @ts-ignore
             await window.themeMode.light();
             updateDocumentTheme(false);
             break;
         case "system":
+            // @ts-ignore
             const isDarkMode = await window.themeMode.system();
             updateDocumentTheme(isDarkMode);
             break;
@@ -37,6 +41,7 @@ export async function setTheme(newTheme: ThemeMode) {
 }
 
 export async function toggleTheme() {
+    // @ts-ignore
     const isDarkMode = await window.themeMode.toggle();
     const newTheme = isDarkMode ? "dark" : "light";
 
